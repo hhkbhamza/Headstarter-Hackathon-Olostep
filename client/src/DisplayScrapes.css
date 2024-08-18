@@ -1,11 +1,9 @@
-/* Center content and provide some padding */
 .container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
 }
 
-/* Style the category section */
 .category {
     margin-bottom: 40px;
     padding: 20px;
@@ -13,7 +11,6 @@
     border-radius: 8px;
 }
 
-/* Style each item */
 .item {
     margin-bottom: 20px;
     padding: 15px;
@@ -22,7 +19,6 @@
     background-color: #f9f9f9;
 }
 
-/* Style links */
 a {
     color: #007bff;
     text-decoration: none;
@@ -32,7 +28,6 @@ a:hover {
     text-decoration: underline;
 }
 
-/* Style images */
 .image-list {
     list-style-type: none;
     padding: 0;
@@ -45,4 +40,27 @@ a:hover {
     max-height: 100px;
     margin: 5px;
     border-radius: 4px;
+}
+
+p, h3, h4, li {
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+.category, .item, .container {
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.image-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.image-container img {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
 }

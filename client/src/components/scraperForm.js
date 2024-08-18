@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import '../ScraperForm.css'; // Assuming you'll create a separate CSS file for styles
 
 export default function ScraperForm() {
   const [url, setUrl] = useState('');
@@ -51,12 +52,14 @@ export default function ScraperForm() {
           <h2>Category: {category}</h2>
         </div>
       )}
-      {scrapedContent && Object.keys(scrapedContent).length > 0 && (
-        <div style={{ marginTop: '1rem' }}>
-          <h2>Scraped Content:</h2>
-          <pre>{JSON.stringify(scrapedContent, null, 2)}</pre>
-        </div>
-      )}
+      <div className='scraped-content'>
+        {scrapedContent && Object.keys(scrapedContent).length > 0 && (
+          <div style={{ marginTop: '1rem' }}>
+            <h2>Scraped Content:</h2>
+            <pre className='scraped-pre'>{JSON.stringify(scrapedContent, null, 2)}</pre>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

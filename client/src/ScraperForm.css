@@ -1,0 +1,14 @@
+.scraped-content {
+    max-width: 100%;
+    overflow-x: auto; 
+    padding: 1rem;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+  }
+  
+  .scraped-pre {
+    white-space: pre-wrap;
+    word-break: break-word; 
+    overflow-wrap: break-word;
+  }
+  
