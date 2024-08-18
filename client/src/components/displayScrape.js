@@ -36,7 +36,7 @@ export default function DisplayScrapes() {
 
     return (
         <div className="container">
-            <h1>Saved Web Scraped Data</h1>
+            <h1 className="saved-scrapedData">Data others are scraping:</h1>
             {Object.keys(data).map(category => (
                 <div key={category} className="category">
                     <h2>{category}</h2>

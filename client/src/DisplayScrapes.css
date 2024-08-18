@@ -7,7 +7,6 @@
 .category {
     margin-bottom: 40px;
     padding: 20px;
-    border: 1px solid #ddd;
     border-radius: 8px;
 }
 
@@ -64,3 +63,8 @@ p, h3, h4, li {
     object-fit: cover;
     border-radius: 5px;
 }
+
+.saved-scrapedData {
+    text-align: center;
+}
+
