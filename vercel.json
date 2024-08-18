@@ -6,7 +6,7 @@
         "config": { "distDir": "client/build" }
       },
       {
-        "src": "server/routes/app.js",
+        "src": "server/app.js",
         "use": "@vercel/node"
       }
     ],
