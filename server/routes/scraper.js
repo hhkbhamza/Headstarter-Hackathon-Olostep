@@ -63,5 +63,24 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/data', async (req, res) => {
+  try {
+    const data = await ScrapedData.find();
+
+    // Organize data by category
+    const organizedData = data.reduce((acc, item) => {
+      const category = item.category || 'Uncategorized';
+      if (!acc[category]) {
+        acc[category] = [];
+      }
+      acc[category].push(item);
+      return acc;
+    }, {});
+
+    res.status(200).json(organizedData);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve data', details: error.message });
+  }
+});
 
 module.exports = router;

@@ -1,0 +1,48 @@
+/* Center content and provide some padding */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Style the category section */
+.category {
+    margin-bottom: 40px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+/* Style each item */
+.item {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+/* Style links */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Style images */
+.image-list {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.image-list .image {
+    max-width: 100px;
+    max-height: 100px;
+    margin: 5px;
+    border-radius: 4px;
+}
