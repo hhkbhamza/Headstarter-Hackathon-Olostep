@@ -1,8 +1,14 @@
 const express = require('express');
 const Xray = require('x-ray');
+const OpenAI = require('openai');
+require('dotenv').config({ path: './.env.local' }); 
 
 const router = express.Router();
 const x = Xray();
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY, 
+});
 
 router.get('/', async (req, res) => {
   const { url } = req.query;
@@ -25,7 +31,20 @@ router.get('/', async (req, res) => {
       });
     });
 
-    res.status(200).json({ data: result });
+    const content = `${result.title}\n\n${result.paragraphs.join('\n')}`;
+    const aiResponse = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [
+        { role: "system", content: "You are a helpful assistant that categorizes content." },
+        { role: "user", content: `Analyze the following content and provide a category:\n\n"${content}"\n\nCategory:` }
+      ],
+      max_tokens: 60,
+      temperature: 0.7,
+    });
+    const category = aiResponse.choices[0].message.content.trim();
+
+
+    res.status(200).json({ category, results: result });
   } catch (error) {
     res.status(500).json({ error: 'Scraping failed', details: error.message });
   }

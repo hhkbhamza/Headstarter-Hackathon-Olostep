@@ -3,34 +3,37 @@ import axios from 'axios';
 
 export default function ScraperForm() {
   const [url, setUrl] = useState('');
-  const [results, setResults] = useState(null);
+  const [category, setCategory] = useState(null);
+  const [scrapedContent, setScrapedContent] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleScrape = async () => {
     setLoading(true);
     setError('');
-    setResults(null);
+    setCategory(null);
+    setScrapedContent(null);
 
     try {
       const response = await axios.get(`/api/scraper`, {
         params: { url }
       });
 
-      if (response.data.data) {
-        setResults(response.data.data);
+      if (response.data.category) {
+        setCategory(response.data.category);
+        setScrapedContent(response.data.results || {});
       } else {
         setError('No data found.');
       }
     } catch (err) {
-      setError('An error occurred while scraping the website.');
+      setError('An error occurred while scraping and categorizing the website.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div>
+    <div style={{ maxWidth: '600px', margin: '0 auto', padding: '2rem' }}>
       <h1>Web Scraper</h1>
       <input
         type="text"
@@ -39,14 +42,19 @@ export default function ScraperForm() {
         placeholder="Enter URL to scrape"
         style={{ padding: '0.5rem', width: '100%', marginBottom: '1rem' }}
       />
-      <button onClick={handleScrape} disabled={loading}>
-        {loading ? 'Scraping...' : 'Scrape'}
+      <button onClick={handleScrape} disabled={loading} style={{ padding: '0.5rem 1rem' }}>
+        {loading ? 'Scraping and Categorizing...' : 'Scrape'}
       </button>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {results && (
-        <div>
-          <h2>Results:</h2>
-          <pre>{JSON.stringify(results, null, 2)}</pre>
+      {error && <p style={{ color: 'red', marginTop: '1rem' }}>{error}</p>}
+      {category && (
+        <div style={{ marginTop: '1rem' }}>
+          <h2>Category: {category}</h2>
+        </div>
+      )}
+      {scrapedContent && Object.keys(scrapedContent).length > 0 && (
+        <div style={{ marginTop: '1rem' }}>
+          <h2>Scraped Content:</h2>
+          <pre>{JSON.stringify(scrapedContent, null, 2)}</pre>
         </div>
       )}
     </div>
