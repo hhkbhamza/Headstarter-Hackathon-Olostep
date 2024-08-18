@@ -1,6 +1,7 @@
 const express = require('express');
 const Xray = require('x-ray');
 const OpenAI = require('openai');
+const ScrapedData = require('../models/ScrapedData');
 require('dotenv').config({ path: './.env.local' }); 
 
 const router = express.Router();
@@ -21,9 +22,9 @@ router.get('/', async (req, res) => {
     const result = await new Promise((resolve, reject) => {
       x(url, {
         title: 'title',
-        headings: x(['h1', 'h2', 'h3']), 
-        links: x('a', [{ text: '', href: '@href' }]), 
-        paragraphs: x(['p']), 
+        headings: x(['h1', 'h2', 'h3']),
+        links: x('a', [{ text: '', href: '@href' }]),
+        paragraphs: x(['p']),
         images: x('img', [{ src: '@src', alt: '@alt' }]),
       })((err, data) => {
         if (err) reject(err);
@@ -43,11 +44,24 @@ router.get('/', async (req, res) => {
     });
     const category = aiResponse.choices[0].message.content.trim();
 
+    // Save to MongoDB
+    const scrapedData = new ScrapedData({
+      category,
+      url,
+      title: result.title,
+      headings: result.headings,
+      links: result.links,
+      paragraphs: result.paragraphs,
+      images: result.images,
+    });
+
+    await scrapedData.save();
 
     res.status(200).json({ category, results: result });
   } catch (error) {
     res.status(500).json({ error: 'Scraping failed', details: error.message });
   }
 });
+
 
 module.exports = router;
